@@ -15,11 +15,6 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    private function authInfo() {
-        $user_auth = Auth::user();
-        return $user_auth->getInfo();
-    }
-
     public function index()
     {
         $context = [
