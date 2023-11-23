@@ -32,9 +32,9 @@ class User extends Authenticatable
     {
         $context = [
             'current_user' => $this,
-            'department' => Department::where('id', $this->department_id)->first(),
-            'jobs' => $this->getJobs(),
-            'roles' => $this->getRoles()
+            'current_department' => Department::where('id', $this->department_id)->first(),
+            'current_jobs' => $this->getJobs(),
+            'current_roles' => $this->getRoles()
         ];
         return $context;
     }
@@ -44,10 +44,12 @@ class User extends Authenticatable
         $roles = array();
         $jobs = $this->getJobs();
         foreach ($jobs as $job) {
-            $roles_in_job = json_decode($job->roles, true);
-            foreach ($roles_in_job['roles'] as $role) {
-                if (in_array($role, $roles) == false) {
-                    array_push($roles, $role);
+            if ($job->roles != null) {
+                $roles_in_job = json_decode($job->roles, true);
+                foreach ($roles_in_job['roles'] as $role) {
+                    if (in_array($role, $roles) == false) {
+                        array_push($roles, $role);
+                    }
                 }
             }
         }

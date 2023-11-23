@@ -8,20 +8,27 @@
                 <img class="p-2 rounded-2xl shadow-2xl overflow-hidden h-80 object-contain" src="https://магпк.рф/upload/iblock/c5d/bz720su3e8ykyonl8b4wzr46r2ewv4tx.png">
             </div>
             <p class="w-full text-center text-3xl">{{ $current_user->second_name }} {{ $current_user->first_name }}</p>
-            <p><b>Отдел:</b> {{ $department->name }}</p>
+            <p><b>Отдел:</b> {{ $current_department->name }}</p>
             <p><b>Должность:</b>
-            @foreach ($jobs as $job)
+            @foreach ($current_jobs as $job)
                 {{ $job->name }}/
             @endforeach
             </p>
         </div>
         <div class="w-full text-xl space-y-4">
-            @if (in_array(config('roles.admin'), $roles) == true)
+            @if (in_array(config('roles.admin'), $current_roles) == true)
             <div class="w-full text-center shadow-2xl rounded-xl overflow-hidden bg-[#DEFCF9]">
                 <h1 class="border-b-4 border-black p-2">Функции администратора</h1>
                 <a type="button" class="w-full p-2 border-b-2 border-[#C3BEF0] hover:bg-[#C3BEF0] active:bg-[#bbb5f0]" href="{{ route('add_user') }}">Добавить пользователя</a>
                 <a type="button" class="w-full p-2 border-b-2 border-[#C3BEF0] hover:bg-[#C3BEF0] active:bg-[#bbb5f0]" href="{{ route('add_job') }}">Добавить должность</a>
                 <a type="button" class="w-full p-2 border-b-2 border-[#C3BEF0] hover:bg-[#C3BEF0] active:bg-[#bbb5f0]" href="{{ route('add_department') }}">Добавить отдел</a>
+            </div>
+            @endif
+            @if (in_array(config('roles.statements_creater'), $current_roles) == true)
+            <div class="w-full text-center shadow-2xl rounded-xl overflow-hidden bg-[#DEFCF9]">
+                <h1 class="border-b-4 border-black p-2">Работа с выписками</h1>
+                <a type="button" class="w-full p-2 border-b-2 border-[#C3BEF0] hover:bg-[#C3BEF0] active:bg-[#bbb5f0]" href="">Добавить тип выписки</a>
+                <a type="button" class="w-full p-2 border-b-2 border-[#C3BEF0] hover:bg-[#C3BEF0] active:bg-[#bbb5f0]" href="">Добавить уточнение выписки</a>
             </div>
             @endif
             <div class="w-full text-center shadow-2xl rounded-xl overflow-hidden bg-[#DEFCF9]">
