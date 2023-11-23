@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Department;
+use App\Models\Job;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Auth;
 
 class RegisterController extends Controller
 {
@@ -29,7 +34,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -38,36 +43,45 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        return Validator::make($data, []);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        $this->guard()->login(Auth::user());
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
+    }
+
+    public function showRegistrationForm()
+    {
+        $context = [
+            'departs' => Department::get(),
+            'jobs' => Job::get(),
+            'users' => User::get()
+        ];
+        return view('register', array_merge($this->authInfo(), $context));
+    }
+
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $params = [
+            'login' => $data['login'],
+            'first_name' => $data['first_name'],
+            'second_name' => $data['second_name'],
+            'job_id' => json_encode(['jobs' => array_map('intval', $data['job_id'])]),
+            'department_id' => intval($data['department_id']),
+            'password' => Hash::make($data['password'])
+        ];
+        if ($data['header'] != 'null') {
+            $params['header'] = $data['header'];
+        }
+        return User::create($params);
     }
 }

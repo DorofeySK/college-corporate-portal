@@ -13,17 +13,25 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+//General routes
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/{user}', [App\Http\Controllers\HomeController::class, 'checkUser'])->name('check_user');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
-Route::get('/add_user', [])->name('add_user');
-Route::get('/add_job', [])->name('add_job');
-Route::get('/add_department', [])->name('add_department');
+//Admin panel routes
+Route::get('/add_user', [App\Http\Controllers\Auth\RegisterController::class, 'showRegistrationForm'])->name('add_user');
+Route::controller(App\Http\Controllers\AdminPanel\JobController::class)->group(function () {
+    Route::get('/add_job', 'index')->name('add_job');
+    Route::post('/add_job', 'add_job')->name('add_job_post');
+});
+Route::controller(App\Http\Controllers\AdminPanel\DepartmentController::class)->group(function () {
+    Route::get('/add_department', 'index')->name('add_department');
+    Route::post('/add_department', 'add_department')->name('add_department_post');
+});
 
+//Standart user routes
 Route::get('/add_statement', [App\Http\Controllers\StatementController::class, 'index'])->name('add_statement');
 Route::get('/users', [])->name('users');
 Route::controller(App\Http\Controllers\DocumentController::class)->group(function() {

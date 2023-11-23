@@ -30,9 +30,10 @@ class HomeController extends Controller
         $is_header = false;
         if ($checked_user != null) {
             $header = User::where('login', $checked_user->header)->first();
-            while ($is_header == false || $header != null) {
-                if ($header->login == $auth_params['user_auth']->login) {
+            while ($is_header == false && $header != null) {
+                if ($header->login == $auth_params['current_user']->login) {
                     $is_header = true;
+                    break;
                 } else {
                     $header = User::where('login', $header->header)->first();
                 }

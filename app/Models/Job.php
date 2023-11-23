@@ -8,5 +8,5 @@ class Job extends Model
 {
     public $timestamps = false;
     protected $table = 'job';
-    protected $fillable = ['name', 'rang'];
+    protected $fillable = ['name', 'rang', 'roles'];
 }

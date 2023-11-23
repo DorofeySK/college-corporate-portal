@@ -5,5 +5,5 @@
 return [
     'admin' => 'Администратор',
     'accountant' => 'Бухгалтер',
-    'teacher' => 'Педагог'
+    'statements_creater' => 'Создание_выписок'
 ];
