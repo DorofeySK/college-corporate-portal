@@ -16,11 +16,11 @@ return new class extends Migration
             $table->index('id');
             $table->string('owner_login', 100);
             $table->string('checker_login', 100);
-            $table->foreignId('payment_id')->nullable();
-            $table->json('doc_ids')->nullable();
-            $table->string('state', 15)->nullable();
-            $table->date('publication_day')->nullable();
-            $table->date('update_day')->nullable();
+            $table->foreignId('payment_id');
+            $table->json('doc_ids');
+            $table->string('state', 15);
+            $table->date('publication_day');
+            $table->date('update_day');
         });
 
         Schema::table('statement', function (Blueprint $table) {

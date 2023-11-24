@@ -27,24 +27,13 @@ class HomeController extends Controller
     {
         $auth_params = $this->authInfo();
         $checked_user = User::where('login', $user)->first();
-        $is_header = false;
-        if ($checked_user != null) {
-            $header = User::where('login', $checked_user->header)->first();
-            while ($is_header == false && $header != null) {
-                if ($header->login == $auth_params['current_user']->login) {
-                    $is_header = true;
-                    break;
-                } else {
-                    $header = User::where('login', $header->header)->first();
-                }
-            }
-        }
         $context = [
-            'current_table' => false,
-            'is_header' => $is_header
+            'current_table' => false
         ];
-        if ($is_header) {
+        if ($auth_params['current_subordinates']->contains($checked_user) == true) {
             $context['checked_user'] = $checked_user->getInfo();
+        } else {
+            $context['checked_user'] = null;
         }
         return view('home', array_merge($context, $auth_params));
     }
