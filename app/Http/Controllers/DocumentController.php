@@ -23,8 +23,8 @@ class DocumentController extends Controller
     {
         $file = $request->file('new_file');
         $user_auth = Auth::user();
-        if (Storage::disk('local')->exists($user_auth->login . '/' . $file->getClientOriginalName()) == false) {
-            $path = $file->storeAs($user_auth->login, $file->getClientOriginalName());
+        if (Storage::disk('local')->exists('public/' . $user_auth->login . '/' . $file->getClientOriginalName()) == false) {
+            $path = $file->storeAs('public/' . $user_auth->login, $file->getClientOriginalName());
             $new_doc = Document::create([
                 'owner_login' => $user_auth->login,
                 'name' => $file->getClientOriginalName(),

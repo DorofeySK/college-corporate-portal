@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Collection;
 
 class User extends Authenticatable
 {
@@ -34,7 +35,9 @@ class User extends Authenticatable
             'current_user' => $this,
             'current_department' => Department::where('id', $this->department_id)->first(),
             'current_jobs' => $this->getJobs(),
-            'current_roles' => $this->getRoles()
+            'current_roles' => $this->getRoles(),
+            'current_subordinates' => $this->getSubordinates(),
+            'current_headers' => $this->getHeaders()
         ];
         return $context;
     }
@@ -54,5 +57,32 @@ class User extends Authenticatable
             }
         }
         return $roles;
+    }
+
+    public function getSubordinates() {
+        if (in_array(config('roles.all_vision'), $this->getRoles()) == true) {
+            return User::get();
+        }
+        $res = new Collection();
+        $next_line = User::where('header', $this->login)->get();
+        while (count($next_line) > 0) {
+            $res = $res->merge($next_line);
+            $buf = new Collection();
+            foreach ($next_line as $next) {
+                $buf = $buf->merge(User::where('header', $next->login)->get());
+            }
+            $next_line = $buf;
+        }
+        return $res;
+    }
+
+    public function getHeaders() {
+        $res = new Collection();
+        $next_header = User::where('login', $this->header)->first();
+        while ($next_header != null) {
+            $res->push($next_header);
+            $next_header = User::where('login', $next_header->header)->first();
+        }
+        return $res;
     }
 }
