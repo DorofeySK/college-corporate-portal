@@ -59,7 +59,8 @@ class User extends Authenticatable
         return $roles;
     }
 
-    public function getSubordinates() {
+    public function getSubordinates()
+    {
         if (in_array(config('roles.all_vision'), $this->getRoles()) == true) {
             return User::get();
         }
@@ -76,7 +77,8 @@ class User extends Authenticatable
         return $res;
     }
 
-    public function getHeaders() {
+    public function getHeaders()
+    {
         $res = new Collection();
         $next_header = User::where('login', $this->header)->first();
         while ($next_header != null) {

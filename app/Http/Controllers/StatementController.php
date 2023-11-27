@@ -40,7 +40,7 @@ class StatementController extends Controller
             'publication_day' => $currentDay,
             'update_day' => $currentDay,
             'doc_ids' => json_encode(['docs' => array_map('intval', $request->input('doc_ids'))]),
-            'state' => config('statementstates.open')
+            'state' => 'open'
         ];
         Statement::create($params);
         return redirect()->route('home');
