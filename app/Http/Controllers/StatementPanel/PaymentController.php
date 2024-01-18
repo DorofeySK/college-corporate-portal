@@ -14,15 +14,31 @@ class PaymentController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index() {
+        $context = [
+            'payments' => Payment::get(),
+            'jobs' => Job::get()
+        ];
+        return view('payments\payment_index', array_merge($this->authInfo(), $context));
+    }
+
+    public function create()
     {
         $jobs = [
             'jobs' => Job::get()
         ];
-        return view('statement_panel\payment', array_merge($this->authInfo(), $jobs));
+        return view('payments\payment_create', array_merge($this->authInfo(), $jobs));
     }
 
-    public function add_payment(Request $request)
+    public function edit($id) {
+        $context = [
+            'jobs' => Job::get(),
+            'payment' => Payment::where('id', $id)->first()
+        ];
+        return view('payments\payment_edit', array_merge($this->authInfo(), $context));
+    }
+
+    public function store(Request $request)
     {
         $params = [
             'name' => $request->input('name'),
@@ -30,6 +46,17 @@ class PaymentController extends Controller
             'job_id' => intval($request->input('job_id'))
         ];
         Payment::create($params);
-        return redirect()->route('home');
+        return redirect()->route('payments.index');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $params = [
+            'name' => $request->input('name'),
+            'type' => $request->input('type'),
+            'job_id' => intval($request->input('job_id'))
+        ];
+        Payment::where('id', $id)->update($params);
+        return redirect()->route('payments.index');
     }
 }

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Models\Job;
 use App\Models\User;
+use App\Models\Statement;
+use App\Models\Payment;
+use App\Models\PaymentDetail;
+use App\Models\Document;
 
 class HomeController extends Controller
 {
@@ -17,10 +21,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $context = [
-            'current_table' => true
-        ];
-        return view('home', array_merge($this->authInfo(), $context));
+        return view('layouts\home', $this->authInfo());
     }
 
     public function checkUser($user)

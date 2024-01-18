@@ -3,7 +3,7 @@
 
 @section('left_part')
 <div class="w-full flex justify-center">
-    <form action="{{ route('add_department_post') }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
+    <form action="{{ route('departments.store') }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
         @csrf
         <input type="text" name="name" placeholder="Введите название отдела" class="w-full p-2 border-b border-black">
         <select size="3" name="header" class="w-full p-2 border-b border-black">

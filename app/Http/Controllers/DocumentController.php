@@ -14,12 +14,16 @@ class DocumentController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        return view('document', $this->authInfo());
+    public function index() {
+        return view(null);//TODO: список всех документов текущего пользователя
     }
 
-    public function add_document(Request $request)
+    public function create()
+    {
+        return view('documents\document_create', $this->authInfo());
+    }
+
+    public function store(Request $request)
     {
         $file = $request->file('new_file');
         $user_auth = Auth::user();
@@ -32,6 +36,6 @@ class DocumentController extends Controller
             ]);
             $new_doc->save();
         }
-        return redirect()->route('home');
+        return redirect()->route('documents.index');
     }
 }
