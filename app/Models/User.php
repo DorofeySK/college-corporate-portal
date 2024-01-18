@@ -61,7 +61,7 @@ class User extends Authenticatable
 
     public function getSubordinates()
     {
-        if (in_array(config('roles.all_vision'), $this->getRoles()) == true) {
+        if (in_array('all_vision', $this->getRoles()) == true) {
             return User::get();
         }
         $res = new Collection();

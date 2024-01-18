@@ -17,12 +17,20 @@ class DepartmentController extends Controller
     public function index()
     {
         $context = [
-            'users' => User::get()
+            'departments' => Department::get()
         ];
-        return view('admin_panel\department', array_merge($this->authInfo(), $context));
+        return view('departments\department_index', array_merge($this->authInfo(), $context)); //TODO: список всех отделов
     }
 
-    public function add_department(Request $request)
+    public function create()
+    {
+        $context = [
+            'users' => User::get()
+        ];
+        return view('departments\department_create', array_merge($this->authInfo(), $context));
+    }
+
+    public function store(Request $request)
     {
         $params = [
             'name' => $request->input('name'),
@@ -31,6 +39,27 @@ class DepartmentController extends Controller
             $params['header'] = $request->input('header');
         }
         Department::create($params);
-        return redirect()->route('home');
+        return redirect()->route('departments.index');
+    }
+
+    public function edit($id)
+    {
+        $context = [
+            'department' => Department::where('id', $id)->first(),
+            'users' => User::get()
+        ];
+        return view('departments\department_edit', array_merge($this->authInfo(), $context));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $params = [
+            'name' => $request->input('name'),
+        ];
+        if ($request->input('header') != 'null') {
+            $params['header'] = $request->input('header');
+        }
+        Department::where('id', $id)->update($params);
+        return redirect()->route('departments.index');
     }
 }

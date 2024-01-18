@@ -19,30 +19,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    private function getStatementTable($user)
-    {
-        $res = array();
-        $statements = Statement::where('owner_login', $user->login)->get();
-        foreach ($statements as $statement) {
-            array_push($res, [
-                'statement' => $statement,
-                'payment' => Payment::where('id', $statement->payment_id)->first(),
-                'payment_detail' => PaymentDetail::where('id', $statement->paymentdetail_id)->first(),
-                'docs' => Document::getDocsFromIds(json_decode($statement->doc_ids, true)['docs']),
-                'checker' => User::where('login', $statement->checker_login)->first()
-            ]);
-        }
-        return $res;
-    }
-
     public function index()
     {
-        $user_params = $this->authInfo();
-        $context = [
-            'current_table' => true,
-            'table' => $this->getStatementTable($user_params['current_user'])
-        ];
-        return view('home', array_merge($user_params, $context));
+        return view('layouts\home', $this->authInfo());
     }
 
     public function checkUser($user)

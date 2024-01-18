@@ -46,7 +46,7 @@ class LoginController extends Controller
     }
     public function showLoginForm()
     {
-        return view('auth');
+        return view('users\auth');
     }
     protected function credentials(Request $request)
     {

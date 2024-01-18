@@ -2,7 +2,7 @@
 @section('title', 'Добавить запись для выплаты')
 
 @section('left_part')
-<form action="{{ route('add_statement_post') }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
+<form action="{{ route('statements.store') }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
     @csrf
     <select onchange="setFullName();" size="5" id="payment_id" name="payment_id" class="w-full p-2 border-b border-black">
         <option disabled>Выберите тип выплаты</option>
