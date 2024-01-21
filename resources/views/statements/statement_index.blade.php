@@ -17,6 +17,7 @@
                 <th class="border border-slate-600 p-4">Дата публикации</th>
                 <th class="border border-slate-600 p-4">Последнее обновление</th>
                 <th class="border border-slate-600 p-4">Статус</th>
+                <th class="border border-slate-600 p-4">Редактировать</th>
             </tr>
         </thead>
         <tbody>
@@ -29,18 +30,19 @@
                     <td class="border border-slate-600 p-4">{{ config('period.' . $row['payment_detail']->period) }}</td>
                     <td class="border border-slate-600 p-4">
                         @foreach ($row['docs'] as $doc)
-                            {{ $doc->name }}<br>
+                            {{ $doc->name }}<br><a href="/storage/{{ $doc->owner_login }}/{{ $doc->name }}">Скачать файл</a>
                         @endforeach
                     </td>
                     <td class="border border-slate-600 p-4">{{ $row['checker']->first_name }} {{ $row['checker']->second_name }}</td>
                     <td class="border border-slate-600 p-4">{{ $row['statement']->publication_day }}</td>
                     <td class="border border-slate-600 p-4">{{ $row['statement']->update_day }}</td>
+                    <td class="border border-slate-600 p-4">{{ config('statementstates.' . $row['statement']->state) }}</td>
                     <td class="border border-slate-600 p-4">
-                        <select name="state">
-                            @foreach(config('statementstates') as $state => $name)
-                                @if(in_array('main_checker', $current_user->getRoles()) || $state != 'used') <option @if($row['statement']->state == $state) selected @endif value="{{ $state }}">{{ $name }}</option> @endif
-                            @endforeach
-                        </select>
+                        @if ($row['statement']->state != 'used')
+                            <a type="button" class="p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('statements.edit', ['id' => $row['statement']->id]) }}">Редактировать</a>
+                        @else
+                            Уже учтен
+                        @endif
                     </td>
                 </tr>
             @endforeach

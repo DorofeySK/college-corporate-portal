@@ -8,5 +8,5 @@ class Message extends Model
 {
     protected $table = 'message';
     public $timestamps = false;
-    protected $fillable = ['sendtime', 'login_from', 'login_to', 'type', 'messgae_text'];
+    protected $fillable = ['sendtime', 'login_from', 'login_to', 'type', 'message_text'];
 }

@@ -9,6 +9,7 @@ use App\Models\PaymentDetail;
 use App\Models\Document;
 use App\Models\User;
 use App\Models\Statement;
+use App\Models\Message;
 use Carbon\Carbon;
 
 class StatementController extends Controller
@@ -38,10 +39,21 @@ class StatementController extends Controller
     {
         $user_params = $this->authInfo();
         $context = [
-            'current_table' => $login == $user_params['current_user'],
             'table' => $this->getStatementTable($login)
         ];
         return view('statements\statement_index', array_merge($user_params, $context));
+    }
+
+    public function edit($id) {
+        $user = $this->authInfo();
+        $context = [
+            'is_owner' => Statement::where('id', $id)->first()->owner_login == Auth::user()->login,
+            'statement' => Statement::where('id', $id)->first(),
+            'payments' => Payment::get(),
+            'payments_details'=> PaymentDetail::get(),
+            'docs' => Document::where('owner_login', $user['current_user']->login)->get()
+        ];
+        return view('statements\statement_edit', array_merge($user, $context));
     }
 
     public function create()
@@ -53,6 +65,36 @@ class StatementController extends Controller
             'docs' => Document::where('owner_login', $user['current_user']->login)->get()
         ];
         return view('statements\statement_create', array_merge($user, $context));
+    }
+
+    public function update(Request $request, $id) {
+        $currentDay = Carbon::now();
+        $msg_params = [
+            'sendtime' => $currentDay,
+            'type' => 'unchecke',
+            'login_from' => $this->authInfo()['current_user']->login
+        ];
+        if ($request->input('state') != null) {
+            $params = [
+                'state' => $request->input('state'),
+                'update_day' => $currentDay,
+            ];
+            $msg_params['login_to'] = Statement::where('id', $id)->first()->owner_login;
+            $msg_params['message_text'] = 'Системное сообщение: пользователь проверил вашу запись, выставлен статус: ' . config('messagetype.' . $request->input('state'));
+        } else {
+            $params = [
+                'checker_login' => $request->input('checker_login'),
+                'payment_id' => intval($request->input('payment_id')),
+                'paymentdetail_id' => intval($request->input('paymentdetail_id')),
+                'update_day' => $currentDay,
+                'doc_ids' => json_encode(['docs' => array_map('intval', $request->input('doc_ids'))]),
+            ];
+            $msg_params['login_to'] = $params['checker_login'];
+            $msg_params['message_text'] = 'Системное сообщение: пользователь обновил запись, требуется проверка.';
+        }
+        Message::create($msg_params);
+        Statement::where('id', $id)->update($params);
+        return redirect()->route('statements.index', Statement::where('id', $id)->first()->owner_login);
     }
 
     public function store(Request $request)
@@ -69,6 +111,14 @@ class StatementController extends Controller
             'state' => 'open'
         ];
         Statement::create($params);
-        return redirect()->route('statements.index');
+        $msg_params = [
+            'sendtime' => $params['publication_day'],
+            'login_from' => $params['owner_login'],
+            'login_to' => $params['checker_login'],
+            'type' => 'unchecke',
+            'message_text' => 'Системное сообщение: пользователь указал вас проверяющим для новой записи.'
+        ];
+        Message::create($msg_params);
+        return redirect()->route('statements.index', $params['owner_login']);
     }
 }
