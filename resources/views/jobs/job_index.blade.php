@@ -2,7 +2,7 @@
 @section('title', 'Просмотр отделов')
 
 @section('left_part')
-<div class="w-full overflow-auto scrollbar p-2 flex-col justify-center">
+<div class="w-full h-full overflow-scroll scrollbar p-12">
     <a type="button" class="p-2 border-b border-black hover:bg-black hover:text-white mb-6" href="{{ route('jobs.create') }}">Добавить должность</a>
     <table class="table-auto border border-collapse border-black border-spacing-10">
         <thead>
