@@ -7,7 +7,7 @@
     <select onchange="setFullName();" size="5" id="payment_id" name="payment_id" class="w-full p-2 border-b border-black">
         <option disabled>Выберите тип выплаты</option>
         @foreach ($payments as $payment)
-            <option value="{{ $payment->id }}">{{ $payment->name }} - {{ $payment->type }}</option>
+            <option value="{{ $payment->id }}">{{ $payment->name }} - {{ $payment->type }} ({{ App\Models\Job::where('id', $payment->job_id)->first()->name }})</option>
         @endforeach
     </select>
     <p class="border border-black" id="full_payment_name"></p>

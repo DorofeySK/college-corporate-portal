@@ -41,7 +41,8 @@ Route::controller(App\Http\Controllers\StatementController::class)->group(functi
     Route::get('/statements/{login}', 'index')->name('statements.index');
     Route::get('/statement/create', 'create')->name('statements.create');
     Route::post('/statement', 'store')->name('statements.store');
-    Route::get('/statements/{id}/edit', 'edit')->name('statements.edit');
+    Route::get('/statement/{id}/edit', 'edit')->name('statements.edit');
+    Route::post('/statement/{id}', 'update')->name('statements.update');
 });
 
 //Userts route
@@ -77,4 +78,10 @@ Route::controller(App\Http\Controllers\DocumentController::class)->group(functio
     Route::get('/documents/create', 'create')->name('documents.create');
     Route::post('/documents', 'store')->name('documents.store');
 });
-Route::get('/messages', [])->name('messages');
+
+Route::controller(App\Http\Controllers\MessageController::class)->group(function() {
+    Route::get('/messages/{type}', 'index')->name('messages.index');
+    Route::get('/messages/out/create', 'create')->name('messages.create');
+    Route::post('/messages/out', 'store')->name('messages.store');
+    Route::get('/messages/{type}/{id}', 'show')->name('messages.show');
+});
