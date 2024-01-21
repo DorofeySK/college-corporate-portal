@@ -2,8 +2,8 @@
 @section('title', 'Профиль')
 
 @section('left_part')
-<h1 class="w-full text-center">Таблица выплат</h1>
-<div class="w-full overflow-auto scrollbar p-2">
+<div class="w-full h-full overflow-scroll scrollbar p-12">
+    <h1 class="w-full text-center mb-6">Таблица выплат</h1>
     <table class="table-auto border border-collapse border-black border-spacing-10">
         <thead>
             <tr>

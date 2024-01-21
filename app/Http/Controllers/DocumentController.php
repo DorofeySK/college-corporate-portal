@@ -36,6 +36,6 @@ class DocumentController extends Controller
             ]);
             $new_doc->save();
         }
-        return redirect()->route('documents.index');
+        return redirect()->route('documents.create');
     }
 }

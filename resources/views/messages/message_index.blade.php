@@ -2,8 +2,8 @@
 @section('title', 'Просмотр сообщений')
 
 @section('left_part')
-<div class="w-full h-full">
-    <div class="w-full overflow-auto scrollbar p-2 flex flex-col space-y-4 justify-center">
+<div class="w-full h-full overflow-scroll scrollbar p-12">
+    <div class="w-full flex flex-col space-y-4 justify-center">
         <div class="flex space-x-4 justify-center">
             <a type="button" class="p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('messages.index', ['type' => 'out']) }}">Исходящие</a>
             <a type="button" class="p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('messages.index', ['type' => 'in']) }}">Входящие</a>

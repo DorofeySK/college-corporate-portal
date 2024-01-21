@@ -80,7 +80,7 @@ class StatementController extends Controller
                 'update_day' => $currentDay,
             ];
             $msg_params['login_to'] = Statement::where('id', $id)->first()->owner_login;
-            $msg_params['message_text'] = 'Системное сообщение: пользователь проверил вашу запись, выставлен статус: ' . config('messagetype.' . $request->input('state'));
+            $msg_params['message_text'] = 'Системное сообщение: пользователь проверил вашу запись, выставлен статус: ' . config('statementstates.' . $request->input('state'));
         } else {
             $params = [
                 'checker_login' => $request->input('checker_login'),
@@ -88,6 +88,7 @@ class StatementController extends Controller
                 'paymentdetail_id' => intval($request->input('paymentdetail_id')),
                 'update_day' => $currentDay,
                 'doc_ids' => json_encode(['docs' => array_map('intval', $request->input('doc_ids'))]),
+                'state' => 'corrected'
             ];
             $msg_params['login_to'] = $params['checker_login'];
             $msg_params['message_text'] = 'Системное сообщение: пользователь обновил запись, требуется проверка.';

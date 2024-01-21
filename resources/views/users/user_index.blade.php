@@ -2,7 +2,7 @@
 @section('title', 'Пользователи')
 
 @section('left_part')
-<div class="w-full flex-col justify-center overflow-auto scrollbar p-2">
+<div class="w-full h-full overflow-scroll scrollbar p-12">
     @if (in_array('admin', $current_roles) == true)
     <a type="button" class="p-2 border-b border-black hover:bg-black hover:text-white mb-6" href="{{ route('users.create') }}">Добавить пользователя</a>
     @endif
