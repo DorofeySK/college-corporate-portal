@@ -32,7 +32,7 @@
                 <option @if($detail->amount_type == $amount) selected @endif value="{{ $amount }}">{{ $value }}</option>
             @endforeach
         </select>
-        <input type="number" name="amount" value="{{ $detail->amount }}" placeholder="Размер выплаты" class="w-full p-2 border-b border-black">
+        <input type="number" name="amount" value="{{ $detail->amount }}" placeholder="Максимальный размер" class="w-full p-2 border-b border-black">
         <input type="submit" value="Обновить критерий выплаты" class="p-2 border-b border-black hover:bg-black hover:text-white">
     </form>
 </div>

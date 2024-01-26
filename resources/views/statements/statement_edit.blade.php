@@ -15,9 +15,10 @@
     <select size="5" id="paymentdetail_id" name="paymentdetail_id" class="w-full p-2 border-b border-black">
         <option disabled>Выберите критерий оценивания (отображаются после выбора типа выплаты)</option>
         @foreach ($payments_details as $detail)
-            <option @if($statement->paymentdetail_id == $detail->id) selected @endif hidden data-payment="{{ $detail->payment_id }}" value="{{ $detail->id }}">{{ $detail->name }}; период: {{ config('period.' . $detail->period) }}; тип учета: {{ $detail->amount }} {{ config('amounttype.' . $detail->amount_type) }}</option>
+            <option onclick="getMaxAmount(this)" @if($statement->paymentdetail_id == $detail->id) selected @endif hidden data-amount="{{ $detail->amount }}" data-payment="{{ $detail->payment_id }}" value="{{ $detail->id }}">{{ $detail->name }}; период: {{ config('period.' . $detail->period) }}; тип учета: {{ $detail->amount }} {{ config('amounttype.' . $detail->amount_type) }}</option>
         @endforeach
     </select>
+    <input type="number" id="amount_id" name="amount" placeholder="Баллы" max="" min="0" class="w-full p-2 border-b border-black">
     <select size="5" name="doc_ids[]" class="w-full p-2 border-b border-black">
         <option disabled>Выберите документы</option>
         @foreach ($docs as $doc)
@@ -47,6 +48,9 @@
             }
         }
     }
+    function getMaxAmount(obj) {
+        document.getElementById('amount_id').setAttribute('max', obj.dataset.amount);
+    }
 </script>
 @else
 <form action="{{ route('statements.update', ['id' => $statement->id]) }}" method="POST" class="w-full p-8 grid grid-cols-3 gap-4 items-center">
@@ -58,7 +62,7 @@
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Критерий выплаты</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->name }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Размер выплаты</p>
-    <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->amount }} ({{ config('amounttype.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->amount_type ) }})</p>
+    <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->amount }} ({{ config('amounttype.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->amount_type ) }})</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Период выплаты</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ config('period.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->period ) }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Подтверждающий документ</p>
