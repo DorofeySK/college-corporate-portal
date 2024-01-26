@@ -32,7 +32,7 @@
                 <option value="{{ $amount }}">{{ $value }}</option>
             @endforeach
         </select>
-        <input type="number" name="amount" placeholder="Размер выплаты" class="w-full p-2 border-b border-black">
+        <input type="number" name="amount" placeholder="Максимальный размер" class="w-full p-2 border-b border-black">
         <input type="submit" value="Добавить новый критерий выплаты" class="p-2 border-b border-black hover:bg-black hover:text-white">
     </form>
 </div>

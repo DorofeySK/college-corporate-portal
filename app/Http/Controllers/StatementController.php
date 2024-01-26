@@ -46,6 +46,8 @@ class StatementController extends Controller
 
     public function edit($id) {
         $user = $this->authInfo();
+        $payments = Payment::whereIn('job_id', array_column($this->authInfo()['current_jobs'], 'id'))->get();
+        $details = PaymentDetail::whereIn('payment_id', array_column($payments->toArray(), 'id'))->get();
         $context = [
             'is_owner' => Statement::where('id', $id)->first()->owner_login == Auth::user()->login,
             'statement' => Statement::where('id', $id)->first(),
@@ -59,9 +61,11 @@ class StatementController extends Controller
     public function create()
     {
         $user = $this->authInfo();
+        $payments = Payment::whereIn('job_id', array_column($this->authInfo()['current_jobs'], 'id'))->get();
+        $details = PaymentDetail::whereIn('payment_id', array_column($payments->toArray(), 'id'))->get();
         $context = [
-            'payments' => Payment::get(),
-            'payments_details'=> PaymentDetail::get(),
+            'payments' => $payments,
+            'payments_details'=> $details,
             'docs' => Document::where('owner_login', $user['current_user']->login)->get()
         ];
         return view('statements\statement_create', array_merge($user, $context));
@@ -83,6 +87,7 @@ class StatementController extends Controller
             $msg_params['message_text'] = 'Системное сообщение: пользователь проверил вашу запись, выставлен статус: ' . config('statementstates.' . $request->input('state'));
         } else {
             $params = [
+                'amount' => $request->input('amount'),
                 'checker_login' => $request->input('checker_login'),
                 'payment_id' => intval($request->input('payment_id')),
                 'paymentdetail_id' => intval($request->input('paymentdetail_id')),
@@ -103,6 +108,7 @@ class StatementController extends Controller
         $currentDay = Carbon::now();
         $params = [
             'owner_login' => Auth::user()->login,
+            'amount' => $request->input('amount'),
             'checker_login' => $request->input('checker_login'),
             'payment_id' => intval($request->input('payment_id')),
             'paymentdetail_id' => intval($request->input('paymentdetail_id')),

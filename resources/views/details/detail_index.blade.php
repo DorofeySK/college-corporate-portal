@@ -13,7 +13,7 @@
                 <th class="border border-slate-600 p-4">Критерий</th>
                 <th class="border border-slate-600 p-4">Период</th>
                 <th class="border border-slate-600 p-4">Тип критерия</th>
-                <th class="border border-slate-600 p-4">Размер</th>
+                <th class="border border-slate-600 p-4">Максимальный размер</th>
                 <th class="border border-slate-600 p-4">Редактирование</th>
             </tr>
         </thead>

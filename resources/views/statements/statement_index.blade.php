@@ -26,7 +26,7 @@
                     <td class="border border-slate-600 p-4">{{ $row['payment']->name }}</td>
                     <td class="border border-slate-600 p-4">{{ $row['payment']->type }}</td>
                     <td class="border border-slate-600 p-4">{{ $row['payment_detail']->name }}</td>
-                    <td class="border border-slate-600 p-4">{{ $row['payment_detail']->amount }} ({{ config('amounttype.' . $row['payment_detail']->amount_type) }})</td>
+                    <td class="border border-slate-600 p-4">{{ $row['statement']->amount }} ({{ config('amounttype.' . $row['payment_detail']->amount_type) }})</td>
                     <td class="border border-slate-600 p-4">{{ config('period.' . $row['payment_detail']->period) }}</td>
                     <td class="border border-slate-600 p-4">
                         @foreach ($row['docs'] as $doc)
