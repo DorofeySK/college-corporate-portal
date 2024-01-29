@@ -3,7 +3,7 @@
 
 @section('left_part')
 @if ($is_owner)
-<form action="{{ route('statements.update', ['id' => $statement->id]) }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
+<form id="statement_creation" action="{{ route('statements.update', ['id' => $statement->id]) }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
     @csrf
     <select onchange="setFullName();" size="5" id="payment_id" name="payment_id" class="w-full p-2 border-b border-black">
         <option disabled>Выберите тип выплаты</option>
@@ -18,13 +18,14 @@
             <option onclick="getMaxAmount(this)" @if($statement->paymentdetail_id == $detail->id) selected @endif hidden data-amount="{{ $detail->amount }}" data-payment="{{ $detail->payment_id }}" value="{{ $detail->id }}">{{ $detail->name }}; период: {{ config('period.' . $detail->period) }}; тип учета: {{ $detail->amount }} {{ config('amounttype.' . $detail->amount_type) }}</option>
         @endforeach
     </select>
-    <input type="number" id="amount_id" name="amount" placeholder="Баллы" max="" min="0" class="w-full p-2 border-b border-black">
+    <input type="number" id="amount_id" name="amount" placeholder="Баллы" max="" min="0" class="w-full p-2 border-b border-black" value="{{ $statement->amount }}">
     <select size="5" name="doc_ids[]" class="w-full p-2 border-b border-black">
         <option disabled>Выберите документы</option>
         @foreach ($docs as $doc)
             <option @if(in_array($doc->id, json_decode($statement->doc_ids, true)['docs'])) selected @endif value="{{ $doc->id }}">{{ $doc->name }}</option>
         @endforeach
     </select>
+    <textarea name="description" class="w-full border border-black" rows="5" placeholder="Краткое описание">{{ $statement->description }}</textarea>
     <select size="5" name="checker_login" class="w-full p-2 border-b border-black">
         <option disabled>Выберите проверяющего</option>
         @foreach ($current_headers as $user)
@@ -51,6 +52,15 @@
     function getMaxAmount(obj) {
         document.getElementById('amount_id').setAttribute('max', obj.dataset.amount);
     }
+</script>
+<script type="module">
+    createApp({
+        data() {
+            return {
+
+            }
+        },
+    }).mount('#statement_creation');
 </script>
 @else
 <form action="{{ route('statements.update', ['id' => $statement->id]) }}" method="POST" class="w-full p-8 grid grid-cols-3 gap-4 items-center">

@@ -17,13 +17,14 @@
             <option onclick="getMaxAmount(this)" hidden data-amount="{{ $detail->amount }}" data-payment="{{ $detail->payment_id }}" value="{{ $detail->id }}">{{ $detail->name }}; период: {{ config('period.' . $detail->period) }}; тип учета: {{ $detail->amount }} {{ config('amounttype.' . $detail->amount_type) }}</option>
         @endforeach
     </select>
-    <input type="number" id="amount_id" name="amount" placeholder="Баллы" class="w-full p-2 border-b border-black">
+    <input type="number" id="amount_id" name="amount" placeholder="Баллы" max="" min="0" class="w-full p-2 border-b border-black">
     <select size="5" name="doc_ids[]" class="w-full p-2 border-b border-black">
         <option disabled>Выберите документы</option>
         @foreach ($docs as $doc)
             <option value="{{ $doc->id }}">{{ $doc->name }}</option>
         @endforeach
     </select>
+    <textarea name="description" class="w-full border border-black" rows="5" placeholder="Краткое описание"></textarea>
     <select size="5" name="checker_login" class="w-full p-2 border-b border-black">
         <option disabled>Выберите проверяющего</option>
         @foreach ($current_headers as $user)
