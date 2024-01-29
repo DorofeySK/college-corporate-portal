@@ -22,7 +22,7 @@ class StatementController extends Controller
     private function getStatementTable($login)
     {
         $res = array();
-        $statements = Statement::where('owner_login', $login)->get();
+        $statements = Statement::where('owner_login', $login)->orderBy('update_day', 'desc')->get();
         foreach ($statements as $statement) {
             array_push($res, [
                 'statement' => $statement,
@@ -88,6 +88,7 @@ class StatementController extends Controller
         } else {
             $params = [
                 'amount' => $request->input('amount'),
+                'description' => $request->input('description'),
                 'checker_login' => $request->input('checker_login'),
                 'payment_id' => intval($request->input('payment_id')),
                 'paymentdetail_id' => intval($request->input('paymentdetail_id')),
@@ -109,6 +110,7 @@ class StatementController extends Controller
         $params = [
             'owner_login' => Auth::user()->login,
             'amount' => $request->input('amount'),
+            'description' => $request->input('description'),
             'checker_login' => $request->input('checker_login'),
             'payment_id' => intval($request->input('payment_id')),
             'paymentdetail_id' => intval($request->input('paymentdetail_id')),
