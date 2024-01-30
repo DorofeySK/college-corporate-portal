@@ -77,6 +77,7 @@ Route::controller(App\Http\Controllers\DocumentController::class)->group(functio
     Route::get('/documents', 'index')->name('documents.index');
     Route::get('/documents/create', 'create')->name('documents.create');
     Route::post('/documents', 'store')->name('documents.store');
+    Route::get('/documents/{id}', 'show')->name('documents.show');
 });
 
 Route::controller(App\Http\Controllers\MessageController::class)->group(function() {

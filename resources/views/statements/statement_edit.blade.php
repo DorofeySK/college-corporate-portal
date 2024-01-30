@@ -71,7 +71,7 @@
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $payments->where('id', $statement->payment_id)->first()->type }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Критерий выплаты</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->name }}</p>
-    <p class="col-span-1 p-2 bg-slate-200 rounded-md">Размер выплаты</p>
+    <p class="col-span-1 p-2 bg-slate-200 rounded-md">Самооценка</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->amount }} ({{ config('amounttype.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->amount_type ) }})</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Период выплаты</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ config('period.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->period ) }}</p>
@@ -79,21 +79,28 @@
     <div class="col-span-2 p-2 bg-slate-200 rounded-md">
         @foreach(App\Models\Document::getDocsFromIds(json_decode($statement->doc_ids, true)['docs']) as $doc)
             <p>{{ $doc->name }} (<a href="/storage/{{ $doc->owner_login }}/{{ $doc->name }}">Скачать файл</a>)</p>
+            <p><a href="{{ route('documents.show', ['id' => $doc->id]) }}">Просмотр документа</a></p>
         @endforeach
     </div>
+    <p class="col-span-1 p-2 bg-slate-200 rounded-md">Описание</p>
+    <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->description }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Проверяющий</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ App\Models\User::where('login', $statement->checker_login)->first()->second_name }} {{ App\Models\User::where('login', $statement->checker_login)->first()->first_name }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Дата публикации</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->publication_day }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Последнее обновление</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->update_day }}</p>
+    @if(in_array('main_checker', $current_user->getRoles()))
+    <p class="col-span-1 p-2 bg-slate-200 rounded-md">Итоговая оценка</p>
+    <input type="number" id="main_amount" name="main_amount" placeholder="Итоговые баллы" max="{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->amount }}" min="0" class="col-span-2 w-full p-2 border-b border-black" value="{{ $statement->main_amount }}">
+    @endif
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Состояние</p>
     <select name="state" class="col-span-2 p-2 bg-slate-200 rounded-md">
         @foreach(config('statementstates') as $state => $name)
-            @if(in_array('main_checker', $current_user->getRoles()) || $state != 'used') <option @if($statement->state == $state) selected @endif value="{{ $state }}">{{ $name }}</option> @endif
+            @if(in_array('main_checker', $current_user->getRoles()) && $state == 'used' || $state != 'close') <option @if($statement->state == $state) selected @endif value="{{ $state }}">{{ $name }}</option> @endif
         @endforeach
     </select>
-    @if ($statement->state != 'used')<input type="submit" value="Обновить запись о выплате" class="p-2 col-span-3 border-b border-black hover:bg-black hover:text-white">@endif
+    @if ($statement->state != 'close')<input type="submit" value="Обновить запись о выплате" class="p-2 col-span-3 border-b border-black hover:bg-black hover:text-white">@endif
 </form>
 
 @endif
