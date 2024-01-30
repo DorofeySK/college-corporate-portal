@@ -81,6 +81,7 @@ class StatementController extends Controller
         if ($request->input('state') != null) {
             $params = [
                 'state' => $request->input('state'),
+                'main_amount' => $request->input('main_amount'),
                 'update_day' => $currentDay,
             ];
             $msg_params['login_to'] = Statement::where('id', $id)->first()->owner_login;

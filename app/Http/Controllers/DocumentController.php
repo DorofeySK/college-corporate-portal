@@ -38,4 +38,11 @@ class DocumentController extends Controller
         }
         return redirect()->route('documents.create');
     }
+
+    public function show($id) {
+        $context = [
+            'document' => Document::where('id', $id)->first()
+        ];
+        return view('documents\document_show', array_merge($context, $this->authInfo()));
+    }
 }

@@ -28,7 +28,8 @@
                 <th class="border border-slate-600 p-4">Группа выплат</th>
                 <th class="border border-slate-600 p-4">Тип выплаты</th>
                 <th class="border border-slate-600 p-4">Критерий выплаты</th>
-                <th class="border border-slate-600 p-4">Размер выплаты</th>
+                <th class="border border-slate-600 p-4">Самооценка</th>
+                <th class="border border-slate-600 p-4">Итоговая оценка</th>
                 <th class="border border-slate-600 p-4">Период выплаты</th>
                 <th class="border border-slate-600 p-4">Подтверждающий документ</th>
                 <th class="border border-slate-600 p-4">Проверяющий</th>
@@ -44,6 +45,7 @@
                     <td class="border border-slate-600 p-4">@{{ statement.type }}</td>
                     <td class="border border-slate-600 p-4">@{{ statement.crit }}</td>
                     <td class="border border-slate-600 p-4">@{{ statement.amount }}</td>
+                    <td class="border border-slate-600 p-4">@{{ statement.main_amount }}</td>
                     <td class="border border-slate-600 p-4">@{{ statement.period }}</td>
                     <td class="border border-slate-600 p-4">
                         <a v-for="doc in statement.docs" :href="doc.path">@{{ doc.name }}</a>
@@ -100,6 +102,7 @@
                     type: "{{ $row['payment']->type }}",
                     crit: "{{ $row['payment_detail']->name }}",
                     amount: "{{ $row['statement']->amount }} ({{ config('amounttype.' . $row['payment_detail']->amount_type) }})",
+                    main_amount: "{{ $row['statement']->main_amount }}",
                     period: "{{ config('period.' . $row['payment_detail']->period) }}",
                     docs: [
                     @foreach ($row['docs'] as $doc)
@@ -113,7 +116,7 @@
                     pub_date: "{{ $row['statement']->publication_day }}",
                     update_date: "{{ $row['statement']->update_day }}",
                     state: "{{ config('statementstates.' . $row['statement']->state) }}",
-                    update_posible: "{{ $row['statement']->state }}" != 'used',
+                    update_posible: "{{ $row['statement']->state }}" != 'close',
                     edit_href: "{{ route('statements.edit', ['id' => $row['statement']->id]) }}",
                 },
                 @endforeach
