@@ -97,7 +97,7 @@
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Состояние</p>
     <select name="state" class="col-span-2 p-2 bg-slate-200 rounded-md">
         @foreach(config('statementstates') as $state => $name)
-            @if(in_array('main_checker', $current_user->getRoles()) && $state == 'used' || $state != 'close') <option @if($statement->state == $state) selected @endif value="{{ $state }}">{{ $name }}</option> @endif
+            @if(in_array('main_checker', $current_user->getRoles()) && $state == 'used' || $state != 'close' && $state != 'used') <option @if($statement->state == $state) selected @endif value="{{ $state }}">{{ $name }}</option> @endif
         @endforeach
     </select>
     @if ($statement->state != 'close')<input type="submit" value="Обновить запись о выплате" class="p-2 col-span-3 border-b border-black hover:bg-black hover:text-white">@endif
