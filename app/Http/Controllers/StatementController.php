@@ -39,7 +39,9 @@ class StatementController extends Controller
     {
         $user_params = $this->authInfo();
         $context = [
-            'table' => $this->getStatementTable($login)
+            'owner' => $login,
+            'table' => $this->getStatementTable($login),
+            'is_owner' => $login == Auth::user()->login
         ];
         return view('statements\statement_index', array_merge($user_params, $context));
     }

@@ -21,6 +21,7 @@
             <option selected>Дата публикации</option>
             <option>Дата последнего обновления</option>
         </select>
+        <a v-if="excel_button" type="button" href="{{ route('close.index', ['login' => $owner]) }}" class="p-2 border-b border-black hover:bg-black hover:text-white">Экспорт в Excel</a>
     </div>
     <table class="table-auto border border-collapse border-black border-spacing-10">
         <thead>
@@ -95,6 +96,7 @@
                 to_date: '',
                 date_type: 'Дата публикации',
                 vision_mode: 'Показывать все',
+                main_checker: {{ $is_owner == false && in_array('main_checker', $current_user->getRoles()) ? 1 : 0 }},
                 statements_lst: [
                 @foreach ($table as $row)
                 {
@@ -147,6 +149,10 @@
                     );
                 }
                 return buf_lst;
+            },
+            excel_button: function() {
+                let used_statements = this.statements_lst.filter(statement => statement.state == 'Учтен');
+                return this.main_checker && used_statements.length > 0;
             }
         }
     }).mount('#statement_table');

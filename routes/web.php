@@ -86,3 +86,8 @@ Route::controller(App\Http\Controllers\MessageController::class)->group(function
     Route::post('/messages/out', 'store')->name('messages.store');
     Route::get('/messages/{type}/{id}', 'show')->name('messages.show');
 });
+
+Route::controller(App\Http\Controllers\CloseStatementController::class)->group(function() {
+    Route::get('/close/{login}', 'index')->name('close.index');
+    Route::get('/close/{login}/store', 'store')->name('close.store');
+});
