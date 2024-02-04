@@ -20,7 +20,11 @@ class DocumentController extends Controller
 
     public function create()
     {
-        return view('documents\document_create', $this->authInfo());
+        $current_user = $this->authInfo();
+        $context = [
+            'docs' => Document::where('owner_login', $current_user['current_user']->login)->get()
+        ];
+        return view('documents\document_create', array_merge($context, $current_user));
     }
 
     public function store(Request $request)

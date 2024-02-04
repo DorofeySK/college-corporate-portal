@@ -30,8 +30,7 @@ class CloseStatementController extends Controller
         $user = User::where('login', $login)->first();
         $file_name = $user->second_name . '_' . $user->first_name . '_' . $day;
         Excel::store(new CloseStatementsExport($statements), 'public/' . $user->login . '/' . $file_name . '.xlsx');
-        Excel::download(new CloseStatementsExport($statements), $file_name . '.xlsx');
         Statement::where('owner_login', $login)->where('state', 'used')->update(['state' => 'close']);
-        return redirect()->route('statements.index', $login);
+        return Excel::download(new CloseStatementsExport($statements), $file_name . '.xlsx');
     }
 }

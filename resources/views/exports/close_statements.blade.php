@@ -20,5 +20,13 @@
             <td>{{ $statement->main_amount }}</td>
         </tr>
         @endforeach
+        <tr>
+            <td>Итог</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{ $statements->sum('main_amount') }}</td>
+        </tr>
     </tbody>
 </table>

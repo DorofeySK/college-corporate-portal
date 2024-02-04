@@ -50,11 +50,12 @@ class StatementController extends Controller
         $user = $this->authInfo();
         $payments = Payment::whereIn('job_id', array_column($this->authInfo()['current_jobs'], 'id'))->get();
         $details = PaymentDetail::whereIn('payment_id', array_column($payments->toArray(), 'id'))->get();
+        $is_owner = Statement::where('id', $id)->first()->owner_login == Auth::user()->login;
         $context = [
-            'is_owner' => Statement::where('id', $id)->first()->owner_login == Auth::user()->login,
+            'is_owner' => $is_owner,
             'statement' => Statement::where('id', $id)->first(),
-            'payments' => Payment::get(),
-            'payments_details'=> PaymentDetail::get(),
+            'payments' => $is_owner ? $payments : Payment::get(),
+            'payments_details'=> $is_owner ? $details : PaymentDetail::get(),
             'docs' => Document::where('owner_login', $user['current_user']->login)->get()
         ];
         return view('statements\statement_edit', array_merge($user, $context));
