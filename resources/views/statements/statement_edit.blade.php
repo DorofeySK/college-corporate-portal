@@ -19,7 +19,7 @@
         @endforeach
     </select>
     <input type="number" id="amount_id" name="amount" placeholder="Баллы" max="" min="0" class="w-full p-2 border-b border-black" value="{{ $statement->amount }}">
-    <select size="5" name="doc_ids[]" class="w-full p-2 border-b border-black">
+    <select multiple size="5" name="doc_ids[]" class="w-full p-2 border-b border-black">
         <option disabled>Выберите документы</option>
         @foreach ($docs as $doc)
             <option @if(in_array($doc->id, json_decode($statement->doc_ids, true)['docs'])) selected @endif value="{{ $doc->id }}">{{ $doc->name }}</option>
@@ -53,15 +53,6 @@
         document.getElementById('amount_id').setAttribute('max', obj.dataset.amount);
     }
 </script>
-<script type="module">
-    createApp({
-        data() {
-            return {
-
-            }
-        },
-    }).mount('#statement_creation');
-</script>
 @else
 <form action="{{ route('statements.update', ['id' => $statement->id]) }}" method="POST" class="w-full p-8 grid grid-cols-3 gap-4 items-center">
     @csrf
@@ -78,8 +69,7 @@
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Подтверждающий документ</p>
     <div class="col-span-2 p-2 bg-slate-200 rounded-md">
         @foreach(App\Models\Document::getDocsFromIds(json_decode($statement->doc_ids, true)['docs']) as $doc)
-            <p>{{ $doc->name }} (<a href="/storage/{{ $doc->owner_login }}/{{ $doc->name }}">Скачать файл</a>)</p>
-            <p><a href="{{ route('documents.show', ['id' => $doc->id]) }}">Просмотр документа</a></p>
+            <p>{{ $doc->name }} (<a href="/storage/{{ $doc->owner_login }}/{{ $doc->name }}">Скачать файл</a>/<a href="{{ route('documents.show', ['id' => $doc->id]) }}">Просмотр документа</a>)</p>
         @endforeach
     </div>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Описание</p>

@@ -18,7 +18,7 @@
         @endforeach
     </select>
     <input type="number" id="amount_id" name="amount" placeholder="Баллы" max="" min="0" class="w-full p-2 border-b border-black">
-    <select size="5" name="doc_ids[]" class="w-full p-2 border-b border-black">
+    <select multiple size="5" name="doc_ids[]" class="w-full p-2 border-b border-black">
         <option disabled>Выберите документы</option>
         @foreach ($docs as $doc)
             <option value="{{ $doc->id }}">{{ $doc->name }}</option>
