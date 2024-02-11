@@ -49,7 +49,7 @@
                     <td class="border border-slate-600 p-4">@{{ statement.main_amount }}</td>
                     <td class="border border-slate-600 p-4">@{{ statement.period }}</td>
                     <td class="border border-slate-600 p-4">
-                        <a v-for="doc in statement.docs" :href="doc.path">@{{ doc.name }}</a>
+                        <a v-for="doc in statement.docs" :href="doc.path">@{{ doc.name }}<br></a>
                     </td>
                     <td class="border border-slate-600 p-4">@{{ statement.checker }}</td>
                     <td class="border border-slate-600 p-4">@{{ statement.pub_date }}</td>
@@ -111,7 +111,7 @@
                     {
                         name: "{{ $doc->name }}",
                         path: "/storage/{{ $doc->owner_login }}/{{ $doc->name }}"
-                    }
+                    },
                     @endforeach
                     ],
                     checker: "{{ $row['checker']->first_name }} {{ $row['checker']->second_name }}",

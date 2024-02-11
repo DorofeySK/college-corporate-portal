@@ -10,6 +10,7 @@
         <thead>
             <th class="border border-slate-600 p-4">Фамилия</th>
             <th class="border border-slate-600 p-4">Имя</th>
+            <th class="border border-slate-600 p-4">Отчество</th>
             <th class="border border-slate-600 p-4">Отдел</th>
             <th class="border border-slate-600 p-4">Должность</th>
             @if(in_array('checker', $current_roles) == true)<th class="border border-slate-600 p-4">Выплаты</th>@endif
@@ -20,7 +21,8 @@
             <tr>
                 <td class="border border-slate-600 p-4">{{ $user->second_name }}</td>
                 <td class="border border-slate-600 p-4">{{ $user->first_name }}</td>
-                <td class="border border-slate-600 p-4">{{ $user->getInfo()['current_department']->name }}</td>
+                <td class="border border-slate-600 p-4">{{ $user->patronymic }}</td>
+                <td class="border border-slate-600 p-4">{{ $user->getInfo()['current_department'] != null ? $user->getInfo()['current_department']->name : ''}}</td>
                 <td class="border border-slate-600 p-4">
                     @foreach ($user->getInfo()['current_jobs'] as $job)
                         {{ $job->name }}/

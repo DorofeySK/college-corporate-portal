@@ -1,5 +1,5 @@
 @extends('layouts.general')
-@section('title', 'Загрузить документ')
+@section('title', 'Просмотреть документ')
 
 @section('left_part')
 <div id="document_div" class="w-full flex justify-center">

@@ -36,7 +36,8 @@ class UserListController extends Controller
             'second_name' => $request->input('second_name'),
             'job_id' => json_encode(['jobs' => array_map('intval', $request->input('job_id'))]),
             'department_id' => intval($request->input('department_id')),
-            'password' => Hash::make($request->input('password'))
+            'password' => Hash::make($request->input('password')),
+            'patronymic' => $request->input('patronymic')
         ];
         if ($request->input('header') != 'null') {
             $params['header'] = $request->input('header');

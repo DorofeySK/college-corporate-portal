@@ -77,7 +77,8 @@ class RegisterController extends Controller
             'second_name' => $data['second_name'],
             'job_id' => json_encode(['jobs' => array_map('intval', $data['job_id'])]),
             'department_id' => intval($data['department_id']),
-            'password' => Hash::make($data['password'])
+            'password' => Hash::make($data['password']),
+            'patronymic' => $data['patronymic']
         ];
         if ($data['header'] != 'null') {
             $params['header'] = $data['header'];
