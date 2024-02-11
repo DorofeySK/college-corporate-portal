@@ -8,7 +8,7 @@
                 {{-- <img class="p-2 rounded-2xl shadow-2xl overflow-hidden h-80 object-contain" src="{{ asset('storage/temporary.jpg') }}"> --}}
             </div>
             <p class="w-full text-center text-3xl">{{ $current_user->second_name }} {{ $current_user->first_name }}</p>
-            <p><b>Отдел:</b> {{ $current_department->name }}</p>
+            @if ($current_department != null) <p><b>Отдел:</b> {{ $current_department->name }}</p> @endif
             <p><b>Должность:</b>
             @foreach ($current_jobs as $job)
                 {{ $job->name }}/

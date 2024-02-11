@@ -14,7 +14,7 @@
     <select size="5" id="paymentdetail_id" name="paymentdetail_id" class="w-full p-2 border-b border-black">
         <option disabled>Выберите критерий оценивания (отображаются после выбора типа выплаты)</option>
         @foreach ($payments_details as $detail)
-            <option onclick="getMaxAmount(this)" hidden data-amount="{{ $detail->amount }}" data-payment="{{ $detail->payment_id }}" value="{{ $detail->id }}">{{ $detail->name }}; период: {{ config('period.' . $detail->period) }}; тип учета: {{ $detail->amount }} {{ config('amounttype.' . $detail->amount_type) }}</option>
+            <option onclick="getMaxAmount(this)" hidden data-amount="{{ $detail->amount }}" data-payment="{{ $detail->payment_id }}" value="{{ $detail->id }}">{{ $detail->name }}; период: {{ config('period.' . $detail->period) }}; тип учета: {{ $detail->amount }} ({{ config('amounttype.' . $detail->amount_type) }})</option>
         @endforeach
     </select>
     <input type="number" id="amount_id" name="amount" placeholder="Баллы" max="" min="0" class="w-full p-2 border-b border-black">

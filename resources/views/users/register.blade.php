@@ -9,19 +9,20 @@
         <input type="password" name="password" placeholder="Введите пароль" class="w-full p-2 border-b border-black">
         <input type="text" name="first_name" placeholder="Введите имя" class="w-full p-2 border-b border-black">
         <input type="text" name="second_name" placeholder="Введите фамилию" class="w-full p-2 border-b border-black">
-        <select size="3" name="department_id" class="w-full p-2 border-b border-black">
+        <input type="text" name="patronymic" placeholder="Введите отчество" class="w-full p-2 border-b border-black">
+        <select size="10" name="department_id" class="w-full p-2 border-b border-black">
             <option disabled>Выберите отдел</option>
             @foreach ($departs as $depart)
                 <option value="{{ $depart->id }}">{{ $depart->name }}</option>
             @endforeach
         </select>
-        <select size="5" multiple name="job_id[]" class="w-full p-2 border-b border-black">
+        <select size="10" multiple name="job_id[]" class="w-full p-2 border-b border-black">
             <option disabled>Выберите должность/должности</option>
             @foreach ($jobs as $job)
                 <option value="{{ $job->id }}">{{ $job->name }}</option>
             @endforeach
         </select>
-        <select size="3" name="header" class="w-full p-2 border-b border-black">
+        <select size="10" name="header" class="w-full p-2 border-b border-black">
             <option disabled>Выберите руководителя</option>
             <option value="null">-Нет-</option>
             @foreach ($users as $user)

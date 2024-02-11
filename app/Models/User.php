@@ -12,7 +12,7 @@ class User extends Authenticatable
     public $timestamps = false;
     protected $table = 'user';
     protected $primaryKey = 'login';
-    protected $fillable = ['login', 'password', 'first_name', 'second_name', 'job_id', 'department_id', 'open_for', 'header'];
+    protected $fillable = ['login', 'password', 'first_name', 'second_name', 'job_id', 'department_id', 'open_for', 'header', 'patronymic'];
 
     public function getAuthPassword()
     {
