@@ -2,15 +2,16 @@
 @section('title', 'Корректировка пользователя')
 
 @section('left_part')
-<div class="w-full flex justify-center">
+<div id="app" class="w-full h-full overflow-scroll scrollbar">
     <form action="{{ route('users.update', ['login' => $user->login]) }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
         @csrf
-        <input type="password" name="password" placeholder="Введите пароль" class="w-full p-2 border-b border-black">
+        <input type="password" name="password" placeholder="Введите новый пароль (при необходимости)" class="w-full p-2 border-b border-black">
         <input type="text" value="{{ $user->first_name }}" name="first_name" placeholder="Введите имя" class="w-full p-2 border-b border-black">
         <input type="text" value="{{ $user->second_name }}" name="second_name" placeholder="Введите фамилию" class="w-full p-2 border-b border-black">
         <input type="text" value="{{ $user->patronymic }}" name="patronymic" placeholder="Введите отчество" class="w-full p-2 border-b border-black">
         <select size="10" name="department_id" class="w-full p-2 border-b border-black">
             <option disabled>Выберите отдел</option>
+            <option value="null">-Нет-</option>
             @foreach ($departs as $depart)
                 <option @if($user->department_id == $depart->id) selected @endif value="{{ $depart->id }}">{{ $depart->name }}</option>
             @endforeach
