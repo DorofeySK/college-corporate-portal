@@ -17,7 +17,7 @@ class UserListController extends Controller
 
     public function index()
     {
-        return view('users\user_index', $this->authInfo());
+        return view('users.user_index', $this->authInfo());
     }
 
     public function edit($login) {
@@ -27,7 +27,7 @@ class UserListController extends Controller
             'jobs' => Job::get(),
             'users' => User::get()
         ];
-        return view('users\user_edit', array_merge($this->authInfo(), $context));
+        return view('users.user_edit', array_merge($this->authInfo(), $context));
     }
 
     public function update(Request $request, $login) {

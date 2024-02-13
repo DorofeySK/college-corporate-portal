@@ -19,7 +19,7 @@ class PaymentController extends Controller
             'payments' => Payment::get(),
             'jobs' => Job::get()
         ];
-        return view('payments\payment_index', array_merge($this->authInfo(), $context));
+        return view('payments.payment_index', array_merge($this->authInfo(), $context));
     }
 
     public function create()
@@ -27,7 +27,7 @@ class PaymentController extends Controller
         $jobs = [
             'jobs' => Job::get()
         ];
-        return view('payments\payment_create', array_merge($this->authInfo(), $jobs));
+        return view('payments.payment_create', array_merge($this->authInfo(), $jobs));
     }
 
     public function edit($id) {
@@ -35,7 +35,7 @@ class PaymentController extends Controller
             'jobs' => Job::get(),
             'payment' => Payment::where('id', $id)->first()
         ];
-        return view('payments\payment_edit', array_merge($this->authInfo(), $context));
+        return view('payments.payment_edit', array_merge($this->authInfo(), $context));
     }
 
     public function store(Request $request)

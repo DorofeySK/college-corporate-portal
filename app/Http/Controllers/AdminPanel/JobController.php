@@ -18,7 +18,7 @@ class JobController extends Controller
         $context = [
             'jobs' => Job::get()
         ];
-        return view('jobs\job_index', array_merge($this->authInfo(), $context));
+        return view('jobs.job_index', array_merge($this->authInfo(), $context));
     }
 
     public function create()
@@ -26,7 +26,7 @@ class JobController extends Controller
         $context = [
             'roles' => config('roles')
         ];
-        return view('jobs\job_create', array_merge($this->authInfo(), $context));
+        return view('jobs.job_create', array_merge($this->authInfo(), $context));
     }
 
 
@@ -36,7 +36,7 @@ class JobController extends Controller
             'job' => Job::where('id', $id)->first(),
             'roles' => config('roles')
         ];
-        return view('jobs\job_edit', array_merge($this->authInfo(), $context));
+        return view('jobs.job_edit', array_merge($this->authInfo(), $context));
     }
 
     public function store(Request $request)

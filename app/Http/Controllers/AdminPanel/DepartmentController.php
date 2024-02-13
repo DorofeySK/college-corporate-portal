@@ -19,7 +19,7 @@ class DepartmentController extends Controller
         $context = [
             'departments' => Department::get()
         ];
-        return view('departments\department_index', array_merge($this->authInfo(), $context)); //TODO: список всех отделов
+        return view('departments.department_index', array_merge($this->authInfo(), $context)); //TODO: список всех отделов
     }
 
     public function create()
@@ -27,7 +27,7 @@ class DepartmentController extends Controller
         $context = [
             'users' => User::get()
         ];
-        return view('departments\department_create', array_merge($this->authInfo(), $context));
+        return view('departments.department_create', array_merge($this->authInfo(), $context));
     }
 
     public function store(Request $request)
@@ -48,7 +48,7 @@ class DepartmentController extends Controller
             'department' => Department::where('id', $id)->first(),
             'users' => User::get()
         ];
-        return view('departments\department_edit', array_merge($this->authInfo(), $context));
+        return view('departments.department_edit', array_merge($this->authInfo(), $context));
     }
 
     public function update(Request $request, $id)

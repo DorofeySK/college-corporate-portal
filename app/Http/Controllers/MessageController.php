@@ -29,7 +29,7 @@ class MessageController extends Controller
         } else {
             $context['messages'] = Message::where('login_to', $user_params['current_user']->login)->orderBy('sendtime', 'desc')->get();
         }
-        return view('messages\message_index', array_merge($user_params, $context));
+        return view('messages.message_index', array_merge($user_params, $context));
     }
 
     public function create() {
@@ -37,7 +37,7 @@ class MessageController extends Controller
         $context = [
             'users' => User::get()
         ];
-        return view('messages\message_create', array_merge($user_params, $context));
+        return view('messages.message_create', array_merge($user_params, $context));
     }
 
     public function store(Request $requset) {

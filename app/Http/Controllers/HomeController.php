@@ -21,7 +21,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('layouts\home', $this->authInfo());
+        return view('layouts.home', $this->authInfo());
     }
 
     public function checkUser($user)

@@ -24,7 +24,7 @@ class DocumentController extends Controller
         $context = [
             'docs' => Document::where('owner_login', $current_user['current_user']->login)->get()
         ];
-        return view('documents\document_create', array_merge($context, $current_user));
+        return view('documents.document_create', array_merge($context, $current_user));
     }
 
     public function store(Request $request)
@@ -47,6 +47,6 @@ class DocumentController extends Controller
         $context = [
             'document' => Document::where('id', $id)->first()
         ];
-        return view('documents\document_show', array_merge($context, $this->authInfo()));
+        return view('documents.document_show', array_merge($context, $this->authInfo()));
     }
 }
