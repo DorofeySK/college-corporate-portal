@@ -66,7 +66,7 @@ class RegisterController extends Controller
             'jobs' => Job::get(),
             'users' => User::get()
         ];
-        return view('users\register', array_merge($this->authInfo(), $context));
+        return view('users.register', array_merge($this->authInfo(), $context));
     }
 
     protected function create(array $data)

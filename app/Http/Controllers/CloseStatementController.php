@@ -21,7 +21,7 @@ class CloseStatementController extends Controller
             'owner' => $login,
             'statements' => Statement::where('owner_login', $login)->where('state', 'used')->get()
         ];
-        return view('exports\close_statements_index', array_merge($context, $this->authInfo()));
+        return view('exports.close_statements_index', array_merge($context, $this->authInfo()));
     }
 
     public function store($login) {

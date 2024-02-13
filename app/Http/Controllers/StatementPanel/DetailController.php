@@ -18,7 +18,7 @@ class DetailController extends Controller
         $context = [
             'details' => PaymentDetail::get()
         ];
-        return view('details\detail_index', array_merge($this->authInfo(), $context));
+        return view('details.detail_index', array_merge($this->authInfo(), $context));
     }
 
     public function create()
@@ -28,7 +28,7 @@ class DetailController extends Controller
             'period_types' => config('period'),
             'amount_types' => config('amounttype')
         ];
-        return view('details\detail_create', array_merge($this->authInfo(), $payment));
+        return view('details.detail_create', array_merge($this->authInfo(), $payment));
     }
 
     public function edit($id) {
@@ -38,7 +38,7 @@ class DetailController extends Controller
             'period_types' => config('period'),
             'amount_types' => config('amounttype')
         ];
-        return view('details\detail_edit', array_merge($this->authInfo(), $context));
+        return view('details.detail_edit', array_merge($this->authInfo(), $context));
     }
 
     public function update(Request $request, $id) {

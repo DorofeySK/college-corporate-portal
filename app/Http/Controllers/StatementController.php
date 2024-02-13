@@ -43,7 +43,7 @@ class StatementController extends Controller
             'table' => $this->getStatementTable($login),
             'is_owner' => $login == Auth::user()->login
         ];
-        return view('statements\statement_index', array_merge($user_params, $context));
+        return view('statements.statement_index', array_merge($user_params, $context));
     }
 
     public function edit($id) {
@@ -58,7 +58,7 @@ class StatementController extends Controller
             'payments_details'=> $is_owner ? $details : PaymentDetail::get(),
             'docs' => Document::where('owner_login', $user['current_user']->login)->get()
         ];
-        return view('statements\statement_edit', array_merge($user, $context));
+        return view('statements.statement_edit', array_merge($user, $context));
     }
 
     public function create()
@@ -71,7 +71,7 @@ class StatementController extends Controller
             'payments_details'=> $details,
             'docs' => Document::where('owner_login', $user['current_user']->login)->get()
         ];
-        return view('statements\statement_create', array_merge($user, $context));
+        return view('statements.statement_create', array_merge($user, $context));
     }
 
     public function update(Request $request, $id) {
