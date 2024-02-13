@@ -7,7 +7,7 @@
         @csrf
         <input type="text" name="name" placeholder="Введите название группы" class="w-full p-2 border-b border-black">
         <input type="text" name="type" placeholder="Введите название типа выплаты" class="w-full p-2 border-b border-black">
-        <select size="3" name="job_id" class="w-full p-2 border-b border-black">
+        <select size="10" name="job_id" class="w-full p-2 border-b border-black">
             <option disabled>Выберите должность, для которой используется выплата</option>
             @foreach ($jobs as $job)
                 <option value="{{ $job->id }}">{{ $job->name }}</option>

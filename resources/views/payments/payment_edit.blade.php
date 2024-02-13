@@ -7,7 +7,7 @@
         @csrf
         <input type="text" name="name" value="{{$payment->name}}" placeholder="Введите название группы" class="w-full p-2 border-b border-black">
         <input type="text" name="type" value="{{$payment->type}}" placeholder="Введите название выплаты" class="w-full p-2 border-b border-black">
-        <select size="3" name="job_id" class="w-full p-2 border-b border-black">
+        <select size="10" name="job_id" class="w-full p-2 border-b border-black">
             <option disabled>Выберите должность, для которой используется выплата</option>
             @foreach ($jobs as $job)
                 <option @if($payment->job_id == $job->id) selected @endif value="{{ $job->id }}">{{ $job->name }}</option>
