@@ -5,7 +5,7 @@
 <div class="w-full flex justify-center">
     <form action="{{ route('jobs.update', ['id' => $job->id]) }}" method="POST" class="w-full p-8 flex flex-col space-y-4 items-center">
         @csrf
-        <input type="text" name="name" placeholder="Введите название должности" class="w-full p-2 border-b border-black" value={{$job->name}}>
+        <input type="text" name="name" placeholder="Введите название должности" class="w-full p-2 border-b border-black" value="{{$job->name}}">
         {{-- <input type="number" name="rang" placeholder="Введите ранг должности" class="w-full p-2 border-b border-black"> --}}
         <select multiple size="8" name="roles[]" class="w-full p-2 border-b border-black">
             <option disabled>Выберите роли (модификаторы)</option>
