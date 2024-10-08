@@ -21,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/get_users', function (Request $rq) {
     return array_column(App\Models\User::get()->toArray(), 'login');
 })->name('api.get.users');
+
+
+Route::get('/merge/get_merged', [App\Http\Controllers\MergeController::class, 'get_merged'])->name('merge.get_merged');
+Route::get('/merge/download', [App\Http\Controllers\MergeController::class, 'download'])->name('merge.download');

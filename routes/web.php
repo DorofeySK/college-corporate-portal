@@ -91,3 +91,16 @@ Route::controller(App\Http\Controllers\CloseStatementController::class)->group(f
     Route::get('/close/{login}', 'index')->name('close.index');
     Route::get('/close/{login}/store', 'store')->name('close.store');
 });
+
+Route::controller(App\Http\Controllers\MergeController::class)->group(function() {
+    Route::get('/merge/index', 'index')->name('merge.index');
+});
+
+Route::controller(App\Http\Controllers\FixStatementController::class)->group(function() {
+    Route::get('/fix_statements', 'index')->name('fix.index');
+    Route::get('/fix_statements/create', 'create')->name('fix.create');
+    Route::post('/fix_statements', 'store')->name('fix.store');
+    Route::get('/fix_statements/{id}', 'show')->name('fix.show');
+    Route::get('/fix_statements/{id}/edit', 'edit')->name('fix.edit');
+    Route::post('/fix_statements/{id}', 'update')->name('fix.update');
+});

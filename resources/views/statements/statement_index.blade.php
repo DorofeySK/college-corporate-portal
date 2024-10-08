@@ -43,22 +43,22 @@
         <tbody>
             <tr v-for="statement in statements_filter">
                 <td class="border border-slate-600 p-4">@{{ statement.name }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.type }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.crit }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.amount }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.main_amount }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.period }}</td>
-                    <td class="border border-slate-600 p-4">
-                        <a v-for="doc in statement.docs" :href="doc.path">@{{ doc.name }}<br></a>
-                    </td>
-                    <td class="border border-slate-600 p-4">@{{ statement.checker }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.pub_date }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.update_date }}</td>
-                    <td class="border border-slate-600 p-4">@{{ statement.state }}</td>
-                    <td class="border border-slate-600 p-4">
-                        <a v-if="statement.update_posible" type="button" class="p-2 border-b border-black hover:bg-black hover:text-white" :href="statement.edit_href">Редактировать</a>
-                        <p v-else>Уже учтен</p>
-                    </td>
+                <td class="border border-slate-600 p-4">@{{ statement.type }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.crit }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.amount }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.main_amount }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.period }}</td>
+                <td class="border border-slate-600 p-4">
+                    <a v-for="doc in statement.docs" :href="doc.path">@{{ doc.name }}<br></a>
+                </td>
+                <td class="border border-slate-600 p-4">@{{ statement.checker }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.pub_date }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.update_date }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.state }}</td>
+                <td class="border border-slate-600 p-4">
+                    <a v-if="statement.update_posible" type="button" class="p-2 border-b border-black hover:bg-black hover:text-white" :href="statement.edit_href">Редактировать</a>
+                    <p v-else>Уже учтен</p>
+                </td>
             </tr>
             {{-- @foreach ($table as $row)
                 <tr>

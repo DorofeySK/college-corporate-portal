@@ -16,6 +16,6 @@ class CloseStatementsExport implements FromView
 
     public function view(): View
     {
-        return view('exports\close_statements', ['statements' => $this->exportingStatements]);
+        return view('exports.close_statements', ['statements' => $this->exportingStatements]);
     }
 }

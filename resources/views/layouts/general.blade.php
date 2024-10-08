@@ -11,7 +11,9 @@
             @if ($current_department != null) <p><b>Отдел:</b> {{ $current_department->name }}</p> @endif
             <p><b>Должность:</b>
             @foreach ($current_jobs as $job)
-                {{ $job->name }}/
+
+
+                @if($job != null){{ $job->name }}@endif/
             @endforeach
             </p>
         </div>
@@ -38,7 +40,11 @@
                 @if (in_array('all_vision', $current_roles) == true || count($current_subordinates) > 0)
                     <a type="button" class="w-full p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('users.index') }}">Просматриваемые пользователи</a>
                 @endif
+                @if (in_array('main_checker', $current_roles) == true)
+                    <a type="button" class="w-full p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('merge.index') }}">Сводный экспорт</a>
+                @endif
                 <a type="button" class="w-full p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('messages.index', ['type' => 'in']) }}">Сообщения</a>
+                <a type="button" class="w-full p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('fix.index') }}">Электронная заявка</a>
                 <a type="button" class="w-full p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('logout') }}">Выход</a>
             </div>
         </div>

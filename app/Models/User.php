@@ -47,7 +47,7 @@ class User extends Authenticatable
         $roles = array();
         $jobs = $this->getJobs();
         foreach ($jobs as $job) {
-            if ($job->roles != null) {
+            if ($job != null && $job->roles != null) {
                 $roles_in_job = json_decode($job->roles, true);
                 foreach ($roles_in_job['roles'] as $role) {
                     if (in_array($role, $roles) == false) {
@@ -86,5 +86,9 @@ class User extends Authenticatable
             $next_header = User::where('login', $next_header->header)->first();
         }
         return $res;
+    }
+
+    public function getFullName() {
+        return $this->second_name . " " . $this->first_name . " " . $this->patronymic;
     }
 }

@@ -61,7 +61,7 @@
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Тип выплаты</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $payments->where('id', $statement->payment_id)->first()->type }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Критерий выплаты</p>
-    <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->name }}</p>
+    <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->name }}; тип учета: {{ $payments_details->where('id', $statement->paymentdetail_id)->first()->amount }} ({{ config('amounttype.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->amount_type) }})</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Самооценка</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->amount }} ({{ config('amounttype.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->amount_type ) }})</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Период выплаты</p>
