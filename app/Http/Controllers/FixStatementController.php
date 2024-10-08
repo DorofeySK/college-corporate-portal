@@ -53,7 +53,14 @@ class FixStatementController extends Controller
         return view('fix_statements.fix_edit', array_merge($current_user, $context));
     }
 
-    public function update(Request $request) {
-
+    public function update(Request $request, $id) {
+        $current_user = $this->authInfo();
+        $params = [
+            'state' => $request->input('state'),
+            'assigner_login' => $current_user['current_user']->login,
+            'assigner_comment' => $request->input('assigner_comment')
+        ];
+        FixStatement::where('id', $id)->update($params);
+        return redirect()->route('fix.index');
     }
 }

@@ -13,6 +13,14 @@
         <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $fix->description }}</p>
         <p class="col-span-1 p-2 bg-slate-200 rounded-md">Дата создания</p>
         <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $fix->create_at }}</p>
+        <p class="col-span-1 p-2 bg-slate-200 rounded-md">Комментарий исполнителя</p>
+        <input name="assigner_comment" type="text" class="col-span-2 p-2 bg-slate-200 rounded-md">
+        <p class="col-span-1 p-2 bg-slate-200 rounded-md">Статус</p>
+        <select name="state" class="col-span-2 p-2 bg-slate-200 rounded-md">
+            @foreach(config('fixstatementstates') as $key => $value)
+                <option @if($fix->state == $key) selected @endif value="{{ $key }}">{{ $value }}</option>
+            @endforeach
+        </select>
         <input type="submit" value="Обновить статус" class="p-2 col-span-3 border-b border-black hover:bg-black hover:text-white">
     </form>
 </div>

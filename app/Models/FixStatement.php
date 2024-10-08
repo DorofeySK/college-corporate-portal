@@ -8,7 +8,7 @@ class FixStatement extends Model
 {
     public $timestamps = false;
     protected $table = 'fix_statements';
-    protected $fillable = ['creator_login', 'assigner_login', 'type', 'description', 'create_at', 'state'];
+    protected $fillable = ['creator_login', 'assigner_login', 'type', 'description', 'create_at', 'state', 'assigner_comment'];
 
     static public function getUserStatements($login) {
         if ($login != null) {

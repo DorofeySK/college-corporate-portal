@@ -8,6 +8,7 @@
         <thead>
             <th class="border border-slate-600 p-4">Отправитель</th>
             <th class="border border-slate-600 p-4">Ответственный</th>
+            <th class="border border-slate-600 p-4">Комментарий исполнителя</th>
             <th class="border border-slate-600 p-4">Тип</th>
             <th class="border border-slate-600 p-4">Создан</th>
             <th class="border border-slate-600 p-4">Статус</th>
@@ -15,12 +16,15 @@
         </thead>
         <tbody>
             @foreach ($fix_statements as $fix)
-            <td class="border border-slate-600 p-4">{{ App\Models\User::where('login', $fix->creator_login)->first()->getFullName() }}</td>
-            <td class="border border-slate-600 p-4">{{ $fix->assigner_login != null ? App\Models\User::where('login', $fix->assigner_login)->first()->getFullName() : ''}}</td>
-            <td class="border border-slate-600 p-4">{{ config('fixstatementtypes.' . $fix->type) }}</td>
-            <td class="border border-slate-600 p-4">{{ $fix->create_at }}</td>
-            <td class="border border-slate-600 p-4">{{ config('fixstatementstates.' . $fix->state) }}</td>
-            @if (in_array('admin', $current_roles) == true)<td class="border border-slate-600 p-4"><a type="button" class="p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('fix.edit', ['id' => $fix->id]) }}">Открыть</a></td>@endif
+            <tr>
+                <td class="border border-slate-600 p-4">{{ App\Models\User::where('login', $fix->creator_login)->first()->getFullName() }}</td>
+                <td class="border border-slate-600 p-4">{{ $fix->assigner_login != null ? App\Models\User::where('login', $fix->assigner_login)->first()->getFullName() : ''}}</td>
+                <td class="border border-slate-600 p-4">{{ $fix->assigner_comment }}</td>
+                <td class="border border-slate-600 p-4">{{ config('fixstatementtypes.' . $fix->type) }}</td>
+                <td class="border border-slate-600 p-4">{{ $fix->create_at }}</td>
+                <td class="border border-slate-600 p-4">{{ config('fixstatementstates.' . $fix->state) }}</td>
+                @if (in_array('admin', $current_roles) == true)<td class="border border-slate-600 p-4"><a type="button" class="p-2 border-b border-black hover:bg-black hover:text-white" href="{{ route('fix.edit', ['id' => $fix->id]) }}">Открыть</a></td>@endif
+            </tr>
             @endforeach
         </tbody>
     </table>
