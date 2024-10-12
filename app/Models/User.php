@@ -88,7 +88,13 @@ class User extends Authenticatable
         return $res;
     }
 
-    public function getFullName() {
+    public function getFullName() 
+    {
         return $this->second_name . " " . $this->first_name . " " . $this->patronymic;
+    }
+
+    public function isHeader($line_header) 
+    {
+        return $this->header == $line_header->login;
     }
 }

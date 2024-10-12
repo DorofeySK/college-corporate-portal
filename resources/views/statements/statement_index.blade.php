@@ -30,6 +30,7 @@
                 <th class="border border-slate-600 p-4">Тип выплаты</th>
                 <th class="border border-slate-600 p-4">Критерий выплаты</th>
                 <th class="border border-slate-600 p-4">Самооценка</th>
+                <th class="border border-slate-600 p-4">Оценка администрации</th>
                 <th class="border border-slate-600 p-4">Итоговая оценка</th>
                 <th class="border border-slate-600 p-4">Период выплаты</th>
                 <th class="border border-slate-600 p-4">Подтверждающий документ</th>
@@ -46,6 +47,7 @@
                 <td class="border border-slate-600 p-4">@{{ statement.type }}</td>
                 <td class="border border-slate-600 p-4">@{{ statement.crit }}</td>
                 <td class="border border-slate-600 p-4">@{{ statement.amount }}</td>
+                <td class="border border-slate-600 p-4">@{{ statement.middle_amount }}</td>
                 <td class="border border-slate-600 p-4">@{{ statement.main_amount }}</td>
                 <td class="border border-slate-600 p-4">@{{ statement.period }}</td>
                 <td class="border border-slate-600 p-4">
@@ -104,7 +106,8 @@
                     type: "{{ $row['payment']->type }}",
                     crit: "{{ $row['payment_detail']->name }}",
                     amount: "{{ $row['statement']->amount }} ({{ config('amounttype.' . $row['payment_detail']->amount_type) }})",
-                    main_amount: "{{ $row['statement']->main_amount }}",
+                    main_amount: "{{ $row['statement']->main_amount }} ({{ config('amounttype.' . $row['payment_detail']->amount_type) }})",
+                    middle_amount: "{{ $row['statement']->middle_amount }} ({{ config('amounttype.' . $row['payment_detail']->amount_type) }})",
                     period: "{{ config('period.' . $row['payment_detail']->period) }}",
                     docs: [
                     @foreach ($row['docs'] as $doc)

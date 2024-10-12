@@ -80,6 +80,12 @@
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->publication_day }}</p>
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Последнее обновление</p>
     <p class="col-span-2 p-2 bg-slate-200 rounded-md">{{ $statement->update_day }}</p>
+    <p class="col-span-1 p-2 bg-slate-200 rounded-md">Оценка администрации</p>
+    @if(in_array('checker', $current_user->getRoles()) && $line_checker)
+    <input type="number" id="middle_amount" name="middle_amount" placeholder="Оценка администрации" max="{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->amount }}" min="0" class="col-span-2 w-full p-2 border-b border-black" value="{{ $statement->middle_amount }}">
+    @else
+    <p class="col-span-2 p-2 bg-slate-200 rounded-md">@if($statement->middle_amount != null){{ $statement->middle_amount }} ({{ config('amounttype.' . $payments_details->where('id', $statement->paymentdetail_id)->first()->amount_type ) }})@endif</p>
+    @endif
     @if(in_array('main_checker', $current_user->getRoles()))
     <p class="col-span-1 p-2 bg-slate-200 rounded-md">Итоговая оценка</p>
     <input type="number" id="main_amount" name="main_amount" placeholder="Итоговые баллы" max="{{ $payments_details->where('id', $statement->paymentdetail_id)->first()->amount }}" min="0" class="col-span-2 w-full p-2 border-b border-black" value="{{ $statement->main_amount }}">

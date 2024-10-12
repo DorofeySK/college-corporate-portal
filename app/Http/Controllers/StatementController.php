@@ -47,13 +47,19 @@ class StatementController extends Controller
     }
 
     public function edit($id) {
+        $current_stratement = Statement::where('id', $id)->first();
+        $owner_login = $current_stratement->owner_login;
+        $owner = User::where('login', $owner_login)->first();
         $user = $this->authInfo();
+        $is_owner = $owner_login == $user['current_user']->login;
         $payments = Payment::whereIn('job_id', array_column($this->authInfo()['current_jobs'], 'id'))->get();
         $details = PaymentDetail::whereIn('payment_id', array_column($payments->toArray(), 'id'))->get();
-        $is_owner = Statement::where('id', $id)->first()->owner_login == Auth::user()->login;
+        $is_line_checker = $current_stratement->checker_login == $user['current_user']->login;
         $context = [
+            'line_checker' => $is_line_checker,
+            'owner' => $owner,
             'is_owner' => $is_owner,
-            'statement' => Statement::where('id', $id)->first(),
+            'statement' => $current_stratement,
             'payments' => $is_owner ? $payments : Payment::get(),
             'payments_details'=> $is_owner ? $details : PaymentDetail::get(),
             'docs' => Document::where('owner_login', $user['current_user']->login)->get()
@@ -87,6 +93,9 @@ class StatementController extends Controller
                 'main_amount' => $request->input('main_amount'),
                 'update_day' => $currentDay,
             ];
+            if ($request->exists('middle_amount')) {
+                $params['middle_amount'] = $request->input('middle_amount');
+            }
             $msg_params['login_to'] = Statement::where('id', $id)->first()->owner_login;
             $msg_params['message_text'] = 'Системное сообщение: пользователь проверил вашу запись, выставлен статус: ' . config('statementstates.' . $request->input('state'));
         } else {

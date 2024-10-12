@@ -1,5 +1,5 @@
 @extends('layouts.general')
-@section('title', 'Просмотр отделов')
+@section('title', 'Просмотр должностей')
 
 @section('left_part')
 <div class="w-full h-full overflow-scroll scrollbar p-12">

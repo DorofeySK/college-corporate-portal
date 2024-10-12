@@ -16,7 +16,7 @@
             <td>{{ App\Models\PaymentDetail::where('id', $statement->paymentdetail_id)->first()->name }}</td>
             <td>{{ App\Models\PaymentDetail::where('id', $statement->paymentdetail_id)->first()->amount }}</td>
             <td>{{ $statement->amount }}</td>
-            <td>{{ $statement->main_amount }}</td>
+            <td>{{ $statement->middle_amount }}</td>
             <td>{{ $statement->main_amount }}</td>
         </tr>
         @endforeach

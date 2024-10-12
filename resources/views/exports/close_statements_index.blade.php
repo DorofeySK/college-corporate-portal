@@ -25,7 +25,7 @@
                 <td class="border border-slate-600 p-4">{{ App\Models\PaymentDetail::where('id', $statement->paymentdetail_id)->first()->name }}</td>
                 <td class="border border-slate-600 p-4">{{ App\Models\PaymentDetail::where('id', $statement->paymentdetail_id)->first()->amount }}</td>
                 <td class="border border-slate-600 p-4">{{ $statement->amount }}</td>
-                <td class="border border-slate-600 p-4">{{ $statement->main_amount }}</td>
+                <td class="border border-slate-600 p-4">{{ $statement->middle_amount }}</td>
                 <td class="border border-slate-600 p-4">{{ $statement->main_amount }}</td>
             </tr>
             @endforeach
